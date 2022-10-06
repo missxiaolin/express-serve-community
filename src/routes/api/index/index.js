@@ -4,8 +4,8 @@ import RouterConfigBuilder from '../../../library/utils/router_config_builder'
 
 const indexController = new Index()
 
-// 首页
-const index = RouterConfigBuilder.routerConfigBuilder('/api/index', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
+// 保存文章
+const index = RouterConfigBuilder.routerConfigBuilder('/api/article/save', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
     return indexController.index(req, res)
 }, false)
 
