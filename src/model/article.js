@@ -4,6 +4,13 @@ import Logger from "../library/logger";
 
 const TABLE_COLUMN = [];
 
+export const NOT_DELETE = 1
+export const DELETE = 2
+export const TOPPING = 1
+export const NOT_TOPPING = 2
+export const BOUTIQUE = 1
+export const NOT_BOUTIQUE = 2
+
 const BASE_TABLE_NAME = "article";
 
 function getTableName() {
@@ -25,9 +32,9 @@ export default class Article {
     insertData.content = data.content;
     insertData.auth = data.auth;
     insertData.flow = 0;
-    insertData.is_topping = 1;
-    insertData.is_boutique = 2;
-    insertData.is_del = 1;
+    insertData.is_topping = TOPPING;
+    insertData.is_boutique = NOT_BOUTIQUE;
+    insertData.is_del = NOT_DELETE;
     insertData.comment_num = 0;
     insertData.fabulous_num = 0;
     insertData.created_at = data.created_at;
@@ -64,7 +71,7 @@ export default class Article {
     )
       .from(tableName)
       .where("id", data.id)
-      .andWhere("is_del", 1)
+      .andWhere("is_del", NOT_DELETE)
       .catch((err) => {
         console.log(err);
         return [];
@@ -81,7 +88,7 @@ export default class Article {
     let tableName = getTableName();
     let res = await Knex.from(tableName)
       .where("id", data.id)
-      .andWhere("is_del", 1)
+      .andWhere("is_del", NOT_DELETE)
       .update("flow", data.flow + 1)
       .catch((err) => {
         console.log(err);

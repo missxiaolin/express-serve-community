@@ -1,5 +1,6 @@
 import Base from "./base";
 import Article from "../model/article";
+import { NOT_DELETE } from '../model/article'
 import moment from "moment";
 import DATE_FORMAT from "../constants/date_format";
 
@@ -66,10 +67,10 @@ export default class ArticleContent extends Base {
       page = data.page;
     data.offset = page == 1 ? 0 : (page - 1) * 10;
     data.limit = data.pageSize ? data.pageSize : 10;
-    data.is_del = 1;
+    data.is_del = NOT_DELETE;
     let activeData = await articleModel.delList(data);
     let count = await articleModel.allNotDelCount({
-      is_del: 1,
+      is_del: NOT_DELETE,
       title: data.title
     });
     result.activeData = activeData;
