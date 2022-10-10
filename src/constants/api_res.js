@@ -4,11 +4,12 @@
  * @param {*} success 
  * @param {*} errorMessage 
  */
-function showResult(data, success = true, errorMessage = '', errorCode = null) {
+function showResult(data, code = 200, msg = '', errorCode = null) {
     return {
-        success,
-        model: data,
-        errorMessage,
+        code,
+        data,
+        msg,
+        errorCode
     }
 }
 
@@ -20,7 +21,7 @@ function showResult(data, success = true, errorMessage = '', errorCode = null) {
  * @param {*} action
  */
 function showError(errorMessage = '', errorCode = 10000, data = {}) {
-    return showResult(data, false, errorMessage, errorCode)
+    return showResult(data, 500, errorMessage, errorCode)
 }
 
 /**
@@ -28,7 +29,7 @@ function showError(errorMessage = '', errorCode = 10000, data = {}) {
  * @returns 
  */
 function needLoginIn(msg = '请先登录') {
-    return showResult({}, false, msg, 10000)
+    return showResult({}, 500, msg, 10000)
 }
 
 export default {
