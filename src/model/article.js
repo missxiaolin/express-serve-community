@@ -57,10 +57,29 @@ export default class Article {
      */
      async detail(data) {
         let tableName = getTableName()
-        let res = await Knex.select('type', 'title', 'content', 'auth', 'created_at', 'updated_at')
+        let res = await Knex.select('id', 'flow', 'type', 'title', 'content', 'auth', 'created_at', 'updated_at')
             .from(tableName)
             .where('id', data.id)
             .andWhere('is_del', 1)
+            .catch(err => {
+                console.log(err)
+                return []
+            })
+        return res
+    }
+
+    /**
+     * 浏览数增加
+     * @param {*} data 
+     * @returns 
+     */
+    async addFlow(data) {
+        console.log(data)
+        let tableName = getTableName()
+        let res = await Knex.from(tableName)
+            .where('id', data.id)
+            .andWhere('is_del', 1)
+            .update('flow', data.flow + 1)
             .catch(err => {
                 console.log(err)
                 return []

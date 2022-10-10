@@ -44,10 +44,13 @@ export default class ArticleContent extends Base {
     if (!data.id) {
       return this.send(res, {}, 500, "参数错误");
     }
+    // 查询文章
     let result = await articleModel.detail(data);
     if (!result || result.length == 0){
         return this.send(res, {}, 500, "文章不存在 ");
     }
+    // 文章浏览数+1
+    await articleModel.addFlow(result[0]);
     return this.send(res, result[0]);
   }
 }
