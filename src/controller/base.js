@@ -8,11 +8,11 @@ import API_RES from '../constants/api_res'
      * 发送
      * @param {*} res 
      * @param {*} data 
-     * @param {*} success 
+     * @param {*} code 
      * @param {*} errorMessage 
      * @param {*} errorCode
      */
-    send(res, data, success = true, errorMessage = "", errorCode = "") {
-        return res.send(API_RES.showResult(data, success, errorMessage, errorCode))
+    send(res, data, code = 200, errorMessage = "", errorCode = "") {
+        return res.send(API_RES.showResult(data, code, errorMessage, errorCode))
     }
 }
