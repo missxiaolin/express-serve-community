@@ -14,7 +14,13 @@ const articleDetail = RouterConfigBuilder.routerConfigBuilder('/api/article/deta
     return indexController.detail(req, res)
 }, false)
 
+// 文章列表
+const articleList = RouterConfigBuilder.routerConfigBuilder('/api/article/list', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return indexController.list(req, res)
+}, false)
+
 export default {
     ...index,
-    ...articleDetail
+    ...articleDetail,
+    ...articleList
 }
