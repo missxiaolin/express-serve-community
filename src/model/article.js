@@ -33,6 +33,8 @@ export default class Article {
         insertData.is_topping = 2
         insertData.is_boutique = 2
         insertData.is_del = 1
+        insertData.comment_num = 0
+        insertData.fabulous_num = 0
         insertData.created_at = data.created_at
         insertData.updated_at = data.updated_at
 
@@ -47,5 +49,22 @@ export default class Article {
         let id = _.get(insertResult, [0], 0)
 
         return id > 0
+    }
+
+    /**
+     * 获取文章详情
+     * @param {*} data 
+     */
+     async detail(data) {
+        let tableName = getTableName()
+        let res = await Knex.select('type', 'title', 'content', 'auth', 'created_at', 'updated_at')
+            .from(tableName)
+            .where('id', data.id)
+            .andWhere('is_del', 1)
+            .catch(err => {
+                console.log(err)
+                return []
+            })
+        return res
     }
 }

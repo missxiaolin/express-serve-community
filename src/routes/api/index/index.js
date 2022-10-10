@@ -9,7 +9,12 @@ const index = RouterConfigBuilder.routerConfigBuilder('/api/article/save', Route
     return indexController.save(req, res)
 }, false)
 
+// 文章详情
+const articleDetail = RouterConfigBuilder.routerConfigBuilder('/api/article/detail', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return indexController.detail(req, res)
+}, false)
 
 export default {
     ...index,
+    ...articleDetail
 }
