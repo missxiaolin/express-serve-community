@@ -38,41 +38,41 @@ export default class ArticleContent extends Base {
    * @param {*} res
    */
   async detail(req, res) {
-    let data = req.body || {}
+    let data = req.body || {};
 
     if (!data.id) {
       return this.send(res, {}, 500, "参数错误");
     }
     // 查询文章
     let result = await articleModel.detail(data);
-    if (!result || result.length == 0){
-        return this.send(res, {}, 500, "文章不存在 ");
+    if (!result || result.length == 0) {
+      return this.send(res, {}, 500, "文章不存在 ");
     }
     // 文章浏览数+1
     await articleModel.addFlow(result[0]);
     return this.send(res, result[0]);
   }
 
-  detailType(data) {
-
-  }
+  detailType(data) {}
 
   /**
    * 文章列表
-   * @param {*} req 
-   * @param {*} res 
+   * @param {*} req
+   * @param {*} res
    */
   async list(req, res) {
     let data = req.body || {},
-        result = {}
-    data.offset = data.page ? data.page - 1 : 0
-    data.limit = data.pageSize ? data.pageSize : 10
+      result = {},
+      page = data.page;
+    data.offset = page == 1 ? 0 : (page - 1) * 10;
+    data.limit = data.pageSize ? data.pageSize : 10;
+    data.is_del = 1;
     let activeData = await articleModel.notDelList(data);
-    let count = await articleModel.allCount({
-        is_del: 1
-    })
-    result.activeData = activeData
-    result.count = count
+    let count = await articleModel.allNotDelCount({
+      is_del: 1,
+    });
+    result.activeData = activeData;
+    result.count = count;
     return this.send(res, result);
   }
 }

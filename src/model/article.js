@@ -97,38 +97,40 @@ export default class Article {
    */
   async notDelList(data) {
     let tableName = getTableName();
-    let model = [];
+    let model = Knex.from(tableName);
+    if (data.is_del) {
+      model = model.where("is_del", data.is_del);
+    }
 
     // 置顶逻辑，按照is_topping 降序 updated_at 降序
     if (!!data.is_topping && data.is_topping == true) {
-      model = await Knex.from(tableName)
-        .where("is_del", 1)
-        .orderBy([
-          { column: "is_topping", order: "desc" },
-          { column: "updated_at", order: "desc" },
-        ])
-        .offset(data.offset)
-        .limit(data.limit);
+      model = model.orderBy([
+        { column: "is_topping", order: "desc" },
+        { column: "updated_at", order: "desc" },
+      ]);
     }
     // 按照浏览量排序
     if (!!data.is_flow && data.is_flow == true) {
-      model = await Knex.from(tableName)
-        .where("is_del", 1)
-        .orderBy("flow", "desc")
-        .offset(data.offset)
-        .limit(data.limit);
+      model = model.orderBy("flow", "desc");
     }
+    model = await model.offset(data.offset).limit(data.limit);
 
     return model;
   }
 
   /**
    * 数据总数
+   * @param {*} data
    * @returns
    */
-  async allNotDelCount() {
+  async allNotDelCount(data) {
     let tableName = getTableName();
-    let model = await Knex.from(tableName).count("* as activeCount").where("is_del", 1);
+    let model = Knex.from(tableName);
+    if (data.is_del) {
+      model = model.where("is_del", data.is_del);
+    }
+
+    model = await model.count("* as activeCount");
     return model[0].activeCount;
   }
 }
