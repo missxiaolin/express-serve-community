@@ -67,9 +67,10 @@ export default class ArticleContent extends Base {
     data.offset = page == 1 ? 0 : (page - 1) * 10;
     data.limit = data.pageSize ? data.pageSize : 10;
     data.is_del = 1;
-    let activeData = await articleModel.notDelList(data);
+    let activeData = await articleModel.delList(data);
     let count = await articleModel.allNotDelCount({
       is_del: 1,
+      title: data.title
     });
     result.activeData = activeData;
     result.count = count;

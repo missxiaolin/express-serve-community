@@ -95,11 +95,12 @@ export default class Article {
    * @param {*} data
    * @returns
    */
-  async notDelList(data) {
+  async delList(data) {
     let tableName = getTableName();
-    let model = Knex.from(tableName);
-    if (data.is_del) {
-      model = model.where("is_del", data.is_del);
+    let model = Knex.from(tableName).where("is_del", data.is_del);
+
+    if (data.title) {
+      model = model.andWhere("title", "like", `%${data.title}%`);
     }
 
     // 置顶逻辑，按照is_topping 降序 updated_at 降序
@@ -128,6 +129,9 @@ export default class Article {
     let model = Knex.from(tableName);
     if (data.is_del) {
       model = model.where("is_del", data.is_del);
+    }
+    if (data.title) {
+      model = model.andWhere("title", "like", `%${data.title}%`);
     }
 
     model = await model.count("* as activeCount");
