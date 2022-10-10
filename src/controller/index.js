@@ -6,15 +6,15 @@ import DATE_FORMAT from '../constants/date_format'
 const articleModel = new Article()
 
 /**
- * 首页
+ * 文章
  */
-export default class Index extends Base {
+export default class ArticleContent extends Base {
     /**
      * 添加文章
      * @param {*} req 
      * @param {*} res 
      */
-    index(req, res) {
+    save(req, res) {
         let data = req.body || {},
             types = [1, 2, 3]
 
@@ -27,5 +27,5 @@ export default class Index extends Base {
         return this.send(res, { title: '保存成功' })
     }
 
-    
+
 }
