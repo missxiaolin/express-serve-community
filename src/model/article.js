@@ -163,4 +163,32 @@ export default class Article {
     model = await model.count("* as activeCount");
     return model[0].activeCount;
   }
+
+  /**
+   * 查询总数和
+   * @param {*} data 
+   * @returns 
+   */
+  async allDelUserIdSum(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName).where("is_del", data.is_del);
+    if (data.type) {
+      model.andWhere('type', data.type)
+    }
+    if (data.user_id) {
+      model.andWhere('user_id', data.user_id)
+    }
+
+    if (data.is_comment_sum) {
+      model = await model.sum('comment_num as total')
+    }
+
+    if (data.is_fabulous_num) {
+      model = await model.sum('fabulous_num as total')
+    }
+    
+
+    return model[0].total
+  }
+
 }
