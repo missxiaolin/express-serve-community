@@ -148,12 +148,16 @@ export default class Article {
    */
   async allNotDelCount(data) {
     let tableName = getTableName();
-    let model = Knex.from(tableName);
-    if (data.is_del) {
-      model = model.where("is_del", data.is_del);
-    }
+    let model = Knex.from(tableName).where("is_del", data.is_del);
+    
     if (data.title) {
       model = model.andWhere("title", "like", `%${data.title}%`);
+    }
+    if (data.user_id) {
+      model.andWhere('user_id', data.user_id)
+    }
+    if (data.type) {
+      model.andWhere('type', data.type)
     }
 
     model = await model.count("* as activeCount");
