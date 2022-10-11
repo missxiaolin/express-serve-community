@@ -14,6 +14,9 @@ const userArticleList = RouterConfigBuilder.routerConfigBuilder('/api/user/artic
     return userController.getUserList(req, res)
 }, true)
 
+// 用户点赞
+
+// 用户评论
 
 export default {
     ...userArticleAchievement,
