@@ -190,6 +190,10 @@ export default class Article {
     if (data.is_fabulous_num) {
       model = await model.sum("fabulous_num as total");
     }
+    
+    if (data.is_flow) {
+      model = await model.sum("flow as total");
+    }
 
     return model[0].total;
   }

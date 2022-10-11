@@ -29,23 +29,30 @@ export default class UserContent extends Base {
       user_id: data.user_info.user_id,
     });
     // 评论总数
-    let total_comment = await articleModel.allDelUserIdSum({
+    let totalComment = await articleModel.allDelUserIdSum({
       is_del: NOT_DELETE,
       user_id: data.user_info.user_id,
       is_comment_sum: true,
     });
     // 点赞总数
-    let total_fabulous = await articleModel.allDelUserIdSum({
+    let totalFabulous = await articleModel.allDelUserIdSum({
       is_del: NOT_DELETE,
       user_id: data.user_info.user_id,
       is_fabulous_num: true,
+    });
+    // 阅读总数
+    let totalFlow = await articleModel.allDelUserIdSum({
+      is_del: NOT_DELETE,
+      user_id: data.user_info.user_id,
+      is_flow: true,
     });
 
     result = {
       questionCount,
       activeCount,
-      total_comment,
-      total_fabulous,
+      totalComment,
+      totalFabulous,
+      totalFlow,
     };
 
     return this.send(res, result);
