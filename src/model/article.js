@@ -184,17 +184,18 @@ export default class Article {
     }
 
     if (data.is_comment_sum) {
-      model = await model.sum("comment_num as total");
+      model = model.sum("comment_num as comment_total");
     }
 
     if (data.is_fabulous_num) {
-      model = await model.sum("fabulous_num as total");
+      model = model.sum("fabulous_num as fabulous_total");
     }
     
     if (data.is_flow) {
-      model = await model.sum("flow as total");
+      model = model.sum("flow as flow_total");
     }
+    model = await model
 
-    return model[0].total;
+    return model[0];
   }
 }
