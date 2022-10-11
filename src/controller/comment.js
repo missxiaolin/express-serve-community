@@ -15,14 +15,14 @@ export default class CommentContent extends Base {
    * @param {*} res
    */
   async save(req, res) {
-    // let data = req.body || {};
+    let data = req.body || {};
 
-    // if (!data.text || !data.article_id) {
-    //   return this.send(res, {}, 500, "参数错误");
-    // }
-    // data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
-    // data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
-    // commentModel.addComment(data);
+    if (!data.text || !data.article_id) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    commentModel.addComment(data);
     return this.send(res, "保存成功");
   }
 }

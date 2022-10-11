@@ -20,11 +20,12 @@ export default class Comment {
     let tableName = getTableName();
     let insertData = {};
     insertData.text = data.text;
+    insertData.comment_id = 0
     insertData.article_id = data.article_id;
-    insertData.auth = data.user.user_info.auth;
-    insertData.avatar = data.user.user_info.avatar;
+    insertData.auth = data.user_info.auth;
+    insertData.avatar = data.user_info.avatar;
     insertData.is_del = NOT_DELETE;
-    insertData.user_id = data.user.user_info.user_id;
+    insertData.user_id = data.user_info.user_id;
     insertData.created_at = data.created_at;
     insertData.updated_at = data.updated_at;
 
