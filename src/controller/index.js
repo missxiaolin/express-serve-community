@@ -78,7 +78,7 @@ export default class ArticleContent extends Base {
   async list(req, res) {
     let data = req.body || {},
       result = {},
-      page = data.page;
+      page = data.page || 1;
     data.offset = page == 1 ? 0 : (page - 1) * 10;
     data.limit = data.pageSize ? data.pageSize : 30;
     data.is_del = NOT_DELETE;

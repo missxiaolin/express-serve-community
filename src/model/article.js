@@ -10,9 +10,9 @@ export const TOPPING = 1;
 export const NOT_TOPPING = 2;
 export const BOUTIQUE = 1;
 export const NOT_BOUTIQUE = 2;
-export const QUESTION_TYPE = 1
-export const ARTICLE_TYPE = 2
-export const NOTICE_TYPE = 3
+export const QUESTION_TYPE = 1;
+export const ARTICLE_TYPE = 2;
+export const NOTICE_TYPE = 3;
 
 const BASE_TABLE_NAME = "article";
 
@@ -118,6 +118,10 @@ export default class Article {
       model = model.andWhere("type", data.type);
     }
 
+    if (data.user_id) {
+      model = model.andWhere("user_id", data.user_id);
+    }
+
     // 置顶逻辑，按照is_topping 降序 updated_at 降序
     if (!!data.is_topping && data.is_topping == true) {
       model = model.orderBy([
@@ -149,15 +153,15 @@ export default class Article {
   async allNotDelCount(data) {
     let tableName = getTableName();
     let model = Knex.from(tableName).where("is_del", data.is_del);
-    
+
     if (data.title) {
       model = model.andWhere("title", "like", `%${data.title}%`);
     }
     if (data.user_id) {
-      model.andWhere('user_id', data.user_id)
+      model.andWhere("user_id", data.user_id);
     }
     if (data.type) {
-      model.andWhere('type', data.type)
+      model.andWhere("type", data.type);
     }
 
     model = await model.count("* as activeCount");
@@ -166,29 +170,27 @@ export default class Article {
 
   /**
    * 查询总数和
-   * @param {*} data 
-   * @returns 
+   * @param {*} data
+   * @returns
    */
   async allDelUserIdSum(data) {
     let tableName = getTableName();
     let model = Knex.from(tableName).where("is_del", data.is_del);
     if (data.type) {
-      model.andWhere('type', data.type)
+      model.andWhere("type", data.type);
     }
     if (data.user_id) {
-      model.andWhere('user_id', data.user_id)
+      model.andWhere("user_id", data.user_id);
     }
 
     if (data.is_comment_sum) {
-      model = await model.sum('comment_num as total')
+      model = await model.sum("comment_num as total");
     }
 
     if (data.is_fabulous_num) {
-      model = await model.sum('fabulous_num as total')
+      model = await model.sum("fabulous_num as total");
     }
-    
 
-    return model[0].total
+    return model[0].total;
   }
-
 }
