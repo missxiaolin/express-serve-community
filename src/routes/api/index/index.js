@@ -19,8 +19,14 @@ const articleList = RouterConfigBuilder.routerConfigBuilder('/api/article/list',
     return indexController.list(req, res)
 }, true)
 
+// 公告列表
+const articleNoticeList = RouterConfigBuilder.routerConfigBuilder('/api/notice/list', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
+    return indexController.noticeList(req, res)
+}, true)
+
 export default {
     ...index,
     ...articleDetail,
-    ...articleList
+    ...articleList,
+    ...articleNoticeList
 }

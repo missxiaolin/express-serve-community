@@ -1,6 +1,6 @@
 import Base from "./base";
 import Article from "../model/article";
-import { NOT_DELETE } from '../model/article'
+import { NOT_DELETE, NOTICE_TYPE } from "../model/article";
 import moment from "moment";
 import DATE_FORMAT from "../constants/date_format";
 
@@ -54,7 +54,21 @@ export default class ArticleContent extends Base {
     return this.send(res, result[0]);
   }
 
-  detailType(data) {}
+  /**
+   * 公告列表
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async noticeList(req, res) {
+    let data = req.body || {};
+    data.limit = data.pageSize ? data.pageSize : 30;
+    data.is_del = NOT_DELETE
+    data.is_create_sort = true
+    data.type = NOTICE_TYPE
+    let activeData = await articleModel.delList(data);
+    return this.send(res, activeData);
+  }
 
   /**
    * 文章列表
@@ -66,12 +80,12 @@ export default class ArticleContent extends Base {
       result = {},
       page = data.page;
     data.offset = page == 1 ? 0 : (page - 1) * 10;
-    data.limit = data.pageSize ? data.pageSize : 10;
+    data.limit = data.pageSize ? data.pageSize : 30;
     data.is_del = NOT_DELETE;
     let activeData = await articleModel.delList(data);
     let count = await articleModel.allNotDelCount({
       is_del: NOT_DELETE,
-      title: data.title
+      title: data.title,
     });
     result.activeData = activeData;
     result.count = count;

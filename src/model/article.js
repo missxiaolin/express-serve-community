@@ -4,12 +4,15 @@ import Logger from "../library/logger";
 
 const TABLE_COLUMN = [];
 
-export const NOT_DELETE = 1
-export const DELETE = 2
-export const TOPPING = 1
-export const NOT_TOPPING = 2
-export const BOUTIQUE = 1
-export const NOT_BOUTIQUE = 2
+export const NOT_DELETE = 1;
+export const DELETE = 2;
+export const TOPPING = 1;
+export const NOT_TOPPING = 2;
+export const BOUTIQUE = 1;
+export const NOT_BOUTIQUE = 2;
+export const QUESTION_TYPE = 1
+export const ARTICLE_TYPE = 2
+export const NOTICE_TYPE = 3
 
 const BASE_TABLE_NAME = "article";
 
@@ -35,7 +38,7 @@ export default class Article {
     insertData.is_topping = TOPPING;
     insertData.is_boutique = NOT_BOUTIQUE;
     insertData.is_del = NOT_DELETE;
-    insertData.user_id = data.user.user_info.user_id
+    insertData.user_id = data.user.user_info.user_id;
     insertData.comment_num = 0;
     insertData.fabulous_num = 0;
     insertData.created_at = data.created_at;
@@ -111,6 +114,10 @@ export default class Article {
       model = model.andWhere("title", "like", `%${data.title}%`);
     }
 
+    if (data.type) {
+      model = model.andWhere("type", data.type);
+    }
+
     // 置顶逻辑，按照is_topping 降序 updated_at 降序
     if (!!data.is_topping && data.is_topping == true) {
       model = model.orderBy([
@@ -122,7 +129,14 @@ export default class Article {
     if (!!data.is_flow && data.is_flow == true) {
       model = model.orderBy("flow", "desc");
     }
-    model = await model.offset(data.offset).limit(data.limit);
+
+    if (data.is_create_sort) {
+      model = model.orderBy("created_at", "desc");
+    }
+    if (data.offset) {
+      model = model.offset(data.offset);
+    }
+    model = await model.limit(data.limit);
 
     return model;
   }
