@@ -30,11 +30,12 @@ export default class Article {
     insertData.type = data.type;
     insertData.title = data.title;
     insertData.content = data.content;
-    insertData.auth = data.auth;
+    insertData.auth = data.user.user_info.auth;
     insertData.flow = 0;
     insertData.is_topping = TOPPING;
     insertData.is_boutique = NOT_BOUTIQUE;
     insertData.is_del = NOT_DELETE;
+    insertData.user_id = data.user.user_info.user_id
     insertData.comment_num = 0;
     insertData.fabulous_num = 0;
     insertData.created_at = data.created_at;
