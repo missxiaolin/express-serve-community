@@ -1,8 +1,9 @@
 import Base from "./base";
-import Article from "../model/article";
-import { NOT_DELETE, ARTICLE_TYPE, QUESTION_TYPE } from "../model/article";
+import Comment from "../model/comment";
+import moment from "moment";
+import DATE_FORMAT from "../constants/date_format";
 
-const articleModel = new Article();
+const commentModel = new Comment();
 
 /**
  * 用户
@@ -14,6 +15,14 @@ export default class CommentContent extends Base {
    * @param {*} res
    */
   async save(req, res) {
-    
+    // let data = req.body || {};
+
+    // if (!data.text || !data.article_id) {
+    //   return this.send(res, {}, 500, "参数错误");
+    // }
+    // data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    // data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    // commentModel.addComment(data);
+    return this.send(res, "保存成功");
   }
 }

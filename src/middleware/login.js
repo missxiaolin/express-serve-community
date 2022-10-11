@@ -11,12 +11,13 @@ import axios from "axios";
  */
 //  http://test.webapi.sayhaiapp.com/sayhai/user
 function login(req, res, next) {
-  // 测试代码
-  //   req.body.user_info = {
-  //     user_id: 1,
-  //     auth: "xiaolin",
-  //   };
-  //   next();
+  测试代码
+    req.body.user_info = {
+      user_id: 1,
+      auth: "xiaolin",
+      avatar: ''
+    };
+    next();
   let token = req.get("Authorization") || "";
   if (!token) {
     res.send(API_RES.needLoginIn());
@@ -40,6 +41,7 @@ function login(req, res, next) {
       req.body.user_info = {
         user_id: resData.data.data.id,
         auth: resData.data.data.nickName,
+        avatar: resData.data.data.avatar,
       };
       next();
     })

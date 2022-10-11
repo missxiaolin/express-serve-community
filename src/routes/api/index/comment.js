@@ -1,12 +1,12 @@
 import _ from 'lodash'
-import UserContent from '../../../controller/user'
+import CommentContent from '../../../controller/comment'
 import RouterConfigBuilder from '../../../library/utils/router_config_builder'
 
-const userController = new UserContent()
+const commentContent = new CommentContent()
 
 // 用户评论
-const commentSave = RouterConfigBuilder.routerConfigBuilder('/api/comment/save', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
-    return userController.getUserArticleAchievement(req, res)
+const commentSave = RouterConfigBuilder.routerConfigBuilder('/api/comment/save', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return commentContent.save(req, res)
 }, true)
 
 
