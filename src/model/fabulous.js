@@ -45,7 +45,7 @@ export default class Fabulous {
   async detail(data) {
     let tableName = getTableName();
     let res = await Knex.from(tableName)
-    .where('user_id', data.user_info.user_id)
+    .where('user_id', data.user_id)
     .andWhere('article_id', data.article_id)
     .catch((err) => {
       console.log(err);

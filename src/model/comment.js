@@ -41,4 +41,26 @@ export default class Comment {
 
     return id > 0;
   }
+  
+  /**
+   * 查询列表
+   * @param {*} data 
+   * @returns 
+   */
+  async getUserList(data) {
+    console.log(data);
+    let tableName = getTableName();
+    let model = Knex.from(tableName)
+    .where("is_del", NOT_DELETE)
+    .andWhere('article_id', data.article_id)
+    
+
+    if (data.is_create_sort) {
+      model = model.orderBy("created_at", "desc");
+    }
+    
+    model = await model;
+
+    return model;
+  }
 }
