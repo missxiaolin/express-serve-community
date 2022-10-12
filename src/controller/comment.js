@@ -25,7 +25,7 @@ export default class CommentContent extends Base {
     let articleDetail = await articleModel.detail({
       id: data.article_id,
     });
-    if (!articleDetail && articleDetail.length <= 0) {
+    if (!articleDetail || articleDetail.length <= 0) {
       return this.send(res, {}, 500, "文章不存在"); 
     }
 
