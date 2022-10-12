@@ -38,6 +38,23 @@ export default class Fabulous {
   }
 
   /**
+   * 点赞查询，插入之前查一遍避免垃圾数据
+   * @param {*} data 
+   * @returns 
+   */
+  async detail(data) {
+    let tableName = getTableName();
+    let res = await Knex.from(tableName)
+    .where('user_id', data.user_info.user_id)
+    .andWhere('article_id', data.article_id)
+    .catch((err) => {
+      console.log(err);
+      return [];
+    });
+    return res
+  }
+
+  /**
    * 删除点赞
    * @param {*} data 
    */

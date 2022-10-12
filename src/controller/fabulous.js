@@ -30,6 +30,10 @@ export default class FabulousContent extends Base {
     }
     // 点赞
     if (data.is_fabulous == 2) {
+      let fabulousData = await fabulousModel.detail(data)
+      if (!fabulousData || fabulousData.length != 0) {
+        return this.send(res, {}, 500, "您已经点赞过");
+      }
       data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
       data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
       let fabulousDetail = await fabulousModel.save(data);
@@ -44,7 +48,6 @@ export default class FabulousContent extends Base {
     // 删除点赞
     if (data.is_fabulous == 1) {
       let isDel = await fabulousModel.del(data);
-      console.log(isDel);
       if (isDel == 1) {
         await articleModel.addFabulous({
           id: articleDetail[0].id,
