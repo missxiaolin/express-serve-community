@@ -70,6 +70,8 @@ export default class Article {
       "title",
       "content",
       "auth",
+      "comment_num",
+      "fabulous_num",
       "created_at",
       "updated_at"
     )
@@ -198,4 +200,24 @@ export default class Article {
 
     return model[0];
   }
+
+  /**
+   * 点赞数加1或者减1
+   * @param {*} data 
+   * @returns 
+   */
+  async addFabulous(data) {
+    let tableName = getTableName();
+    let res = await Knex.from(tableName)
+      .where("id", data.id)
+      .andWhere("is_del", NOT_DELETE)
+      .update("fabulous_num", data.isFabulous == 2 ? data.fabulous_num + 1 : data.fabulous_num - 1)
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+    return res;
+  }
+
+
 }

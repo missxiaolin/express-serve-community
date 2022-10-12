@@ -1,12 +1,12 @@
 import _ from 'lodash'
-import UserContent from '../../../controller/user'
+import FabulousContent from '../../../controller/fabulous'
 import RouterConfigBuilder from '../../../library/utils/router_config_builder'
 
-const userController = new UserContent()
+const fabulousController = new FabulousContent()
 
 // 用户点赞
-const fabulousSave = RouterConfigBuilder.routerConfigBuilder('/api/fabulous/save', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
-    return userController.getUserArticleAchievement(req, res)
+const fabulousSave = RouterConfigBuilder.routerConfigBuilder('/api/fabulous/save', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return fabulousController.save(req, res)
 }, true)
 
 

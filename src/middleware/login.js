@@ -13,7 +13,7 @@ import axios from "axios";
 function login(req, res, next) {
   // 测试代码
   req.body.user_info = {
-    user_id: 1,
+    user_id: 2,
     auth: "xiaolin",
     avatar: "",
   };
