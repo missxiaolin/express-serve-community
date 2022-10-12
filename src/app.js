@@ -71,8 +71,9 @@ const startup = () => {
   app.use('/', async (req, res, next) => {
     let path = req.path
     // 只对以 /api & /project/${projectId}/api 路径开头的接口进行响应
-    let projectApiReg = /^\/project\/\d+\/api/i
-    if (_.startsWith(path, '/api') || path.search(projectApiReg) === 0 || path == '/') {
+    let cApiReg = /^\/api/i
+    let admApiReg = /^\/adm/i
+    if (_.startsWith(path, '/api') || path.search(cApiReg) === 0 || path.search(admApiReg) === 0 || path == '/') {
       return router(req, res, next)
     } else {
       next()

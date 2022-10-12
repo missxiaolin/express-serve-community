@@ -30,7 +30,10 @@ export default class FabulousContent extends Base {
     }
     // 点赞
     if (data.is_fabulous == 2) {
-      let fabulousData = await fabulousModel.detail(data)
+      let fabulousData = await fabulousModel.detail({
+        user_id: data.user_info.user_id,
+        article_id: data.article_id
+      })
       if (!fabulousData || fabulousData.length != 0) {
         return this.send(res, {}, 500, "您已经点赞过");
       }
