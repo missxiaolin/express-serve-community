@@ -1,13 +1,13 @@
 import _ from 'lodash'
-import AdmArticleContent from '../../../admController/index'
+import UserContent from '../../../admController/user'
 import RouterConfigBuilder from '../../../library/utils/router_config_builder'
 
-const admArticleContent = new AdmArticleContent()
+const userContent = new UserContent()
 
 // 保存公告
 const index = RouterConfigBuilder.routerConfigBuilder('/adm/user/login', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
-    return admArticleContent.save(req, res)
-}, true)
+    return userContent.login(req, res)
+}, false)
 
 
 export default {

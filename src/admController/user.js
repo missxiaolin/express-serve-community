@@ -1,5 +1,6 @@
 import Base from "./base";
 import User from "../model/user";
+import md5 from "md5-node";
 
 const userModel = new User();
 
@@ -13,7 +14,7 @@ export default class UserContent extends Base {
    * @param {*} res
    */
   login(req, res) {
-    
+    console.log(md5('admin'))
     return this.send(res, "保存成功");
   }
 }
