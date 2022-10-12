@@ -15,10 +15,7 @@ const admRouter = express.Router();
 
 let routerConfigMap = {
   ...Api,
-};
-
-let admRouterConfigMap = {
-  ...AdmApi,
+  ...AdmApi
 };
 
 /**
@@ -56,18 +53,6 @@ for (let url of Object.keys(routerConfigMap)) {
   }
 }
 
-// adm 接口自动注册
-for (let url of Object.keys(admRouterConfigMap)) {
-  let routerConfig = admRouterConfigMap[url];
-  if (routerConfig.needLogin) {
-    // 需要登录
-    registerRouterByMethod(admRouter, routerConfig, url);
-  } else {
-    // 不需要登录
-    registerRouterByMethod(withoutLoginRouter, routerConfig, url);
-  }
-}
-
 /* GET home page. */
 withoutLoginRouter.get("/", function (req, res) {
   res.json({ title: "根路径" });
@@ -75,7 +60,8 @@ withoutLoginRouter.get("/", function (req, res) {
 
 // 处理逻辑为: 从上到下, 依次处理
 baseRouter.use("/", withoutLoginRouter);
-baseRouter.use("/", loginRouter);
 baseRouter.use("/", admRouter);
+baseRouter.use("/", loginRouter);
+
 
 export default baseRouter;
