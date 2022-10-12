@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.31)
 # Database: yoga
-# Generation Time: 2022-10-12 05:57:15 +0000
+# Generation Time: 2022-10-12 13:11:19 +0000
 # ************************************************************
 
 
@@ -39,7 +39,7 @@ LOCK TABLES `admin` WRITE;
 
 INSERT INTO `admin` (`id`, `name`, `password`, `created_at`, `updated_at`)
 VALUES
-	(1,'admin','admin','2022-10-11 20:10:53','2022-10-11 20:10:53');
+	(1,'admin','21232f297a57a5a743894a0e4a801f','2022-10-11 20:10:53','2022-10-11 20:10:53');
 
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -76,7 +76,7 @@ LOCK TABLES `article` WRITE;
 
 INSERT INTO `article` (`id`, `user_id`, `type`, `title`, `content`, `auth`, `flow`, `comment_num`, `fabulous_num`, `is_topping`, `is_boutique`, `is_del`, `created_at`, `updated_at`)
 VALUES
-	(1,1,1,'111','3','1111',14,0,2,1,2,1,'2022-10-10 15:16:27','2022-10-10 15:16:27');
+	(1,1,1,'111','3','1111',18,0,2,1,2,1,'2022-10-10 15:16:27','2022-10-10 15:16:27');
 
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
