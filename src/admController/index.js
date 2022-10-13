@@ -68,6 +68,12 @@ export default class AdmArticleContent extends Base {
    * @returns
    */
   async boutique(req, res) {
-    return this.send(res, "保存成功");
+    let data = req.body || {},
+      types = [1, 2];
+    if (!data.id || !data.is_boutique || types.indexOf(Number(data.is_boutique)) == -1) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    await articleModel.updateBoutique(data);
+    return this.send(res, "设置成功");
   }
 }

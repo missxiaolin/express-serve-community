@@ -25,8 +25,8 @@ export default class Article {
 
   /**
    * adm 保存
-   * @param {*} data 
-   * @returns 
+   * @param {*} data
+   * @returns
    */
   async addAdmArticle(data) {
     let tableName = getTableName();
@@ -60,16 +60,30 @@ export default class Article {
 
   /**
    * 设置置顶
-   * @param {*} data 
-   * @returns 
+   * @param {*} data
+   * @returns
    */
   async updateTopping(data) {
     let tableName = getTableName();
     let model = await Knex.from(tableName)
-      .where('id', data.id)
-      .update('is_topping', data.is_topping)
+      .where("id", data.id)
+      .update("is_topping", data.is_topping);
 
-    return model
+    return model;
+  }
+
+  /**
+   * 设置精品
+   * @param {*} data
+   * @returns
+   */
+  async updateBoutique(data) {
+    let tableName = getTableName();
+    let model = await Knex.from(tableName)
+      .where("id", data.id)
+      .update("is_boutique", data.is_boutique);
+
+    return model;
   }
 
   /**
