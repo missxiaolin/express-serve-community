@@ -29,7 +29,7 @@ export default class Fabulous {
       .into(tableName)
       .catch((err) => {
         console.log(err);
-        Logger.log(err.message, "resource_error    add   出错");
+        Logger.log(err.message, "fabulous    add   出错");
         return [];
       });
     let id = _.get(insertResult, [0], 0);
