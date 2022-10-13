@@ -59,6 +59,20 @@ export default class Article {
   }
 
   /**
+   * 设置置顶
+   * @param {*} data 
+   * @returns 
+   */
+  async updateTopping(data) {
+    let tableName = getTableName();
+    let model = await Knex.from(tableName)
+      .where('id', data.id)
+      .update('is_topping', data.is_topping)
+
+    return model
+  }
+
+  /**
    * 保存文章
    * @param {*} data
    */

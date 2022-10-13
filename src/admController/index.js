@@ -37,9 +37,9 @@ export default class AdmArticleContent extends Base {
 
   /**
    * adm list
-   * @param {*} req 
-   * @param {*} res 
-   * @returns 
+   * @param {*} req
+   * @param {*} res
+   * @returns
    */
   async list(req, res) {
     return this.send(res, "保存成功");
@@ -47,19 +47,25 @@ export default class AdmArticleContent extends Base {
 
   /**
    * 置顶
-   * @param {*} req 
-   * @param {*} res 
-   * @returns 
+   * @param {*} req
+   * @param {*} res
+   * @returns
    */
   async topping(req, res) {
-    return this.send(res, "保存成功");
+    let data = req.body || {},
+      types = [1, 2];
+    if (!data.id || !data.is_topping || types.indexOf(Number(data.is_topping)) == -1) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    await articleModel.updateTopping(data);
+    return this.send(res, "设置成功");
   }
 
   /**
    * 精品
-   * @param {*} req 
-   * @param {*} res 
-   * @returns 
+   * @param {*} req
+   * @param {*} res
+   * @returns
    */
   async boutique(req, res) {
     return this.send(res, "保存成功");
