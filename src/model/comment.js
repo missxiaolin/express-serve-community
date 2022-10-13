@@ -3,7 +3,8 @@ import _ from "lodash";
 import Logger from "../library/logger";
 
 const BASE_TABLE_NAME = "comment";
-const NOT_DELETE = 1
+const NOT_DELETE = 1;
+const DELETE = 2;
 
 function getTableName() {
   return BASE_TABLE_NAME;
@@ -20,7 +21,7 @@ export default class Comment {
     let tableName = getTableName();
     let insertData = {};
     insertData.text = data.text;
-    insertData.comment_id = 0
+    insertData.comment_id = 0;
     insertData.article_id = data.article_id;
     insertData.auth = data.user_info.auth;
     insertData.avatar = data.user_info.avatar;
@@ -41,25 +42,38 @@ export default class Comment {
 
     return id > 0;
   }
-  
+
   /**
    * 查询列表
-   * @param {*} data 
-   * @returns 
+   * @param {*} data
+   * @returns
    */
   async getUserList(data) {
-    console.log(data);
     let tableName = getTableName();
     let model = Knex.from(tableName)
-    .where("is_del", NOT_DELETE)
-    .andWhere('article_id', data.article_id)
-    
+      .where("is_del", NOT_DELETE)
+      .andWhere("article_id", data.article_id);
 
     if (data.is_create_sort) {
       model = model.orderBy("created_at", "desc");
     }
-    
+
     model = await model;
+
+    return model;
+  }
+
+  /**
+   * 隐藏评论
+   * @param {*} data
+   * @returns
+   */
+  async del(data) {
+    let tableName = getTableName();
+    let model = await Knex.from(tableName)
+      .where("id", data.id)
+      .andWhere("user_id", data.user_info.user_id)
+      .update('is_del', DELETE);
 
     return model;
   }

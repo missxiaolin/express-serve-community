@@ -9,7 +9,13 @@ const commentSave = RouterConfigBuilder.routerConfigBuilder('/api/comment/save',
     return commentContent.save(req, res)
 }, true)
 
+// 删除评论
+const commentDel = RouterConfigBuilder.routerConfigBuilder('/api/comment/del', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return commentContent.del(req, res)
+}, true)
+
 
 export default {
     ...commentSave,
+    ...commentDel
 }
