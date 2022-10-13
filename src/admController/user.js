@@ -19,13 +19,13 @@ export default class UserContent extends Base {
     if (!data.name || !data.password) {
       return this.send(res, {}, 500, "参数错误");
     }
-    data.password = md5(data.password)
-    let user = await userModel.getUser(data)
+    data.password = md5(data.password);
+    let user = await userModel.getUser(data);
     if (!user || user.length <= 0) {
       return this.send(res, {}, 500, "账号密码错误");
     }
-    
-    let token = Token.encrypt({id: user[0].id})
+
+    let token = Token.encrypt({ id: user[0].id });
     return this.send(res, token);
   }
 }
