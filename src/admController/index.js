@@ -42,7 +42,17 @@ export default class AdmArticleContent extends Base {
    * @returns
    */
   async list(req, res) {
-    return this.send(res, "保存成功");
+    let data = req.body || {},
+      result = {},
+      page = data.page || 1,
+      pageSize = data.pageSize ? data.pageSize : 30;
+    data.offset = page == 1 ? 0 : (page - 1) * pageSize;
+    data.limit = pageSize;
+    let activeData = await articleModel.delList(data);
+    let count = await articleModel.admList(data);
+    result.activeData = activeData;
+    result.count = count;
+    return this.send(res, result);
   }
 
   /**
@@ -54,7 +64,11 @@ export default class AdmArticleContent extends Base {
   async topping(req, res) {
     let data = req.body || {},
       types = [1, 2];
-    if (!data.id || !data.is_topping || types.indexOf(Number(data.is_topping)) == -1) {
+    if (
+      !data.id ||
+      !data.is_topping ||
+      types.indexOf(Number(data.is_topping)) == -1
+    ) {
       return this.send(res, {}, 500, "参数错误");
     }
     await articleModel.updateTopping(data);
@@ -70,7 +84,11 @@ export default class AdmArticleContent extends Base {
   async boutique(req, res) {
     let data = req.body || {},
       types = [1, 2];
-    if (!data.id || !data.is_boutique || types.indexOf(Number(data.is_boutique)) == -1) {
+    if (
+      !data.id ||
+      !data.is_boutique ||
+      types.indexOf(Number(data.is_boutique)) == -1
+    ) {
       return this.send(res, {}, 500, "参数错误");
     }
     await articleModel.updateBoutique(data);
@@ -83,7 +101,7 @@ export default class AdmArticleContent extends Base {
    * @param {*} res
    * @returns
    */
-   async del(req, res) {
+  async del(req, res) {
     let data = req.body || {},
       types = [1, 2];
     if (!data.id || !data.is_del || types.indexOf(Number(data.is_del)) == -1) {

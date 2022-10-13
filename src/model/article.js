@@ -61,6 +61,60 @@ export default class Article {
   }
 
   /**
+   * adm 列表
+   * @param {*} data
+   */
+  async admList(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName);
+    if (data.title) {
+      model = model.andWhere("title", "like", `%${data.title}%`);
+    }
+    if (data.type) {
+      model = model.andWhere("type", data.type);
+    }
+    if (data.is_topping) {
+      model = model.andWhere("is_topping", data.is_topping);
+    }
+    if (data.is_boutique) {
+      model = model.andWhere("is_boutique", data.is_boutique);
+    }
+    if (data.is_del) {
+      model = model.andWhere("is_del", data.is_del);
+    }
+    model = await model.offset(data.offset).limit(data.limit);
+    return model;
+  }
+
+  /**
+   * adm 列表统计
+   * @param {*} data
+   */
+  async admCount(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName);
+
+    if (data.title) {
+      model = model.andWhere("title", "like", `%${data.title}%`);
+    }
+    if (data.type) {
+      model = model.andWhere("type", data.type);
+    }
+    if (data.is_topping) {
+      model = model.andWhere("is_topping", data.is_topping);
+    }
+    if (data.is_boutique) {
+      model = model.andWhere("is_boutique", data.is_boutique);
+    }
+    if (data.is_del) {
+      model = model.andWhere("is_del", data.is_del);
+    }
+
+    model = await model.count("* as activeCount");
+    return model[0].activeCount;
+  }
+
+  /**
    * 设置置顶/非置顶
    * @param {*} data
    * @returns
