@@ -1,6 +1,8 @@
 import Knex from "../library/mysql";
 import _ from "lodash";
 import Logger from "../library/logger";
+import moment from "moment";
+import DATE_FORMAT from "../constants/date_format";
 
 const TABLE_COLUMN = [];
 
@@ -67,7 +69,10 @@ export default class Article {
     let tableName = getTableName();
     let model = await Knex.from(tableName)
       .where("id", data.id)
-      .update("is_topping", data.is_topping);
+      .update({
+        is_topping: data.is_topping,
+        updated_at: moment().format(DATE_FORMAT.DISPLAY_BY_SECOND),
+      });
 
     return model;
   }
