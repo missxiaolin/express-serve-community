@@ -34,4 +34,34 @@ export default class AdmArticleContent extends Base {
     await articleModel.addAdmArticle(data);
     return this.send(res, "保存成功");
   }
+
+  /**
+   * adm list
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async list(req, res) {
+    return this.send(res, "保存成功");
+  }
+
+  /**
+   * 置顶
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async topping(req, res) {
+    return this.send(res, "保存成功");
+  }
+
+  /**
+   * 精品
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async boutique(req, res) {
+    return this.send(res, "保存成功");
+  }
 }

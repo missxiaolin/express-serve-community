@@ -9,7 +9,25 @@ const index = RouterConfigBuilder.routerConfigBuilder('/adm/article/save', Route
     return admArticleContent.save(req, res)
 }, true)
 
+// 所有文章列表
+const admArticleList = RouterConfigBuilder.routerConfigBuilder('/adm/article/list', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return admArticleContent.list(req, res)
+}, true)
+
+// 是否置顶
+const toppingArticle = RouterConfigBuilder.routerConfigBuilder('/adm/article/topping', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return admArticleContent.topping(req, res)
+}, true)
+
+// 是否精品
+const boutiqueArticle = RouterConfigBuilder.routerConfigBuilder('/adm/article/boutique', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return admArticleContent.boutique(req, res)
+}, true)
+
 
 export default {
     ...index,
+    ...admArticleList,
+    ...toppingArticle,
+    ...boutiqueArticle
 }
