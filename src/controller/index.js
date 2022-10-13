@@ -99,9 +99,10 @@ export default class ArticleContent extends Base {
   async list(req, res) {
     let data = req.body || {},
       result = {},
-      page = data.page || 1;
-    data.offset = page == 1 ? 0 : (page - 1) * 10;
-    data.limit = data.pageSize ? data.pageSize : 30;
+      page = data.page || 1,
+      pageSize = data.pageSize ? data.pageSize : 30;
+    data.offset = page == 1 ? 0 : (page - 1) * pageSize;
+    data.limit = pageSize;
     data.is_del = NOT_DELETE;
     let activeData = await articleModel.delList(data);
     let count = await articleModel.allNotDelCount({
