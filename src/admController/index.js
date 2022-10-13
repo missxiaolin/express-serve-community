@@ -15,8 +15,23 @@ export default class AdmArticleContent extends Base {
    * @param {*} req
    * @param {*} res
    */
-  save(req, res) {
-    
+  async save(req, res) {
+    let data = req.body || {},
+      types = [1, 2, 3];
+    if (
+      !data.type ||
+      !data.title ||
+      !data.content ||
+      types.indexOf(Number(data.type)) == -1 ||
+      !data.auth ||
+      !data.is_topping ||
+      !data.is_boutique
+    ) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    await articleModel.addAdmArticle(data);
     return this.send(res, "保存成功");
   }
 }

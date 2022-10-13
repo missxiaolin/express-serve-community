@@ -19,7 +19,7 @@ export default class ArticleContent extends Base {
    * @param {*} req
    * @param {*} res
    */
-  save(req, res) {
+  async save(req, res) {
     let data = req.body || {},
       types = [1, 2, 3];
 
@@ -33,7 +33,7 @@ export default class ArticleContent extends Base {
     }
     data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
     data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
-    articleModel.addArticle(data);
+    await articleModel.addArticle(data);
     return this.send(res, "保存成功");
   }
 

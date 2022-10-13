@@ -24,6 +24,41 @@ export default class Article {
   constructor() {}
 
   /**
+   * adm 保存
+   * @param {*} data 
+   * @returns 
+   */
+  async addAdmArticle(data) {
+    let tableName = getTableName();
+    let insertData = {};
+    insertData.type = data.type;
+    insertData.title = data.title;
+    insertData.content = data.content;
+    insertData.auth = data.auth;
+    insertData.flow = 0;
+    insertData.is_topping = data.is_topping;
+    insertData.is_boutique = data.is_boutique;
+    insertData.is_del = NOT_DELETE;
+    insertData.user_id = data.user_id || 0;
+    insertData.comment_num = 0;
+    insertData.fabulous_num = 0;
+    insertData.created_at = data.created_at;
+    insertData.updated_at = data.updated_at;
+
+    let insertResult = await Knex.returning("id")
+      .insert(insertData)
+      .into(tableName)
+      .catch((err) => {
+        console.log(err);
+        Logger.log(err.message, "article    add   出错");
+        return [];
+      });
+    let id = _.get(insertResult, [0], 0);
+
+    return id > 0;
+  }
+
+  /**
    * 保存文章
    * @param {*} data
    */
@@ -49,7 +84,7 @@ export default class Article {
       .into(tableName)
       .catch((err) => {
         console.log(err);
-        Logger.log(err.message, "resource_error    add   出错");
+        Logger.log(err.message, "article    add   出错");
         return [];
       });
     let id = _.get(insertResult, [0], 0);
@@ -192,32 +227,33 @@ export default class Article {
     if (data.is_fabulous_num) {
       model = model.sum("fabulous_num as fabulous_total");
     }
-    
+
     if (data.is_flow) {
       model = model.sum("flow as flow_total");
     }
-    model = await model
+    model = await model;
 
     return model[0];
   }
 
   /**
    * 点赞数加1或者减1
-   * @param {*} data 
-   * @returns 
+   * @param {*} data
+   * @returns
    */
   async addFabulous(data) {
     let tableName = getTableName();
     let res = await Knex.from(tableName)
       .where("id", data.id)
       .andWhere("is_del", NOT_DELETE)
-      .update("fabulous_num", data.isFabulous == 2 ? data.fabulous_num + 1 : data.fabulous_num - 1)
+      .update(
+        "fabulous_num",
+        data.isFabulous == 2 ? data.fabulous_num + 1 : data.fabulous_num - 1
+      )
       .catch((err) => {
         console.log(err);
         return [];
       });
     return res;
   }
-
-
 }
