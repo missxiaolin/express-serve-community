@@ -61,7 +61,7 @@ export default class Article {
   }
 
   /**
-   * 设置置顶
+   * 设置置顶/非置顶
    * @param {*} data
    * @returns
    */
@@ -78,7 +78,21 @@ export default class Article {
   }
 
   /**
-   * 设置精品
+   * 设置隐藏/显示
+   * @param {*} data
+   * @returns
+   */
+  async updateDel(data) {
+    let tableName = getTableName();
+    let model = await Knex.from(tableName)
+      .where("id", data.id)
+      .update("is_del", data.is_del);
+
+    return model;
+  }
+
+  /**
+   * 设置精品/非精品
    * @param {*} data
    * @returns
    */

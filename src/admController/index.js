@@ -76,4 +76,20 @@ export default class AdmArticleContent extends Base {
     await articleModel.updateBoutique(data);
     return this.send(res, "设置成功");
   }
+
+  /**
+   * 删除
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+   async del(req, res) {
+    let data = req.body || {},
+      types = [1, 2];
+    if (!data.id || !data.is_del || types.indexOf(Number(data.is_del)) == -1) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    await articleModel.updateDel(data);
+    return this.send(res, "设置成功");
+  }
 }

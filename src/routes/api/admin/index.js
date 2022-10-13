@@ -24,10 +24,15 @@ const boutiqueArticle = RouterConfigBuilder.routerConfigBuilder('/adm/article/bo
     return admArticleContent.boutique(req, res)
 }, true)
 
+// 删除文章
+const delArticle = RouterConfigBuilder.routerConfigBuilder('/adm/article/del', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return admArticleContent.del(req, res)
+}, true)
 
 export default {
     ...index,
     ...admArticleList,
     ...toppingArticle,
-    ...boutiqueArticle
+    ...boutiqueArticle,
+    ...delArticle
 }
