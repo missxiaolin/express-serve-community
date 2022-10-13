@@ -4,12 +4,12 @@ import RouterConfigBuilder from '../../../library/utils/router_config_builder'
 
 const userContent = new UserContent()
 
-// 保存公告
-const index = RouterConfigBuilder.routerConfigBuilder('/adm/user/login', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+// 用户登录
+const admLogin = RouterConfigBuilder.routerConfigBuilder('/adm/user/login', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
     return userContent.login(req, res)
 }, false)
 
 
 export default {
-    ...index,
+    ...admLogin,
 }

@@ -1,6 +1,7 @@
 import Base from "./base";
 import User from "../model/user";
 import md5 from "md5-node";
+import Token from "../library/utils/token";
 
 const userModel = new User();
 
@@ -13,8 +14,18 @@ export default class UserContent extends Base {
    * @param {*} req
    * @param {*} res
    */
-  login(req, res) {
-    console.log(md5('admin'))
-    return this.send(res, "保存成功");
+  async login(req, res) {
+    let data = req.body || {};
+    if (!data.name || !data.password) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    data.password = md5(data.password)
+    let user = await userModel.getUser(data)
+    if (!user || user.length <= 0) {
+      return this.send(res, {}, 500, "账号密码错误");
+    }
+    
+    let token = Token.encrypt({id: user[0].id})
+    return this.send(res, token);
   }
 }
