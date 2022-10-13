@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.31)
 # Database: yoga
-# Generation Time: 2022-10-12 13:11:19 +0000
+# Generation Time: 2022-10-13 02:38:02 +0000
 # ************************************************************
 
 
@@ -28,10 +28,11 @@ DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '',
-  `password` varchar(30) NOT NULL DEFAULT '',
+  `password` varchar(100) NOT NULL DEFAULT '',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`,`password`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `admin` WRITE;
@@ -39,7 +40,7 @@ LOCK TABLES `admin` WRITE;
 
 INSERT INTO `admin` (`id`, `name`, `password`, `created_at`, `updated_at`)
 VALUES
-	(1,'admin','21232f297a57a5a743894a0e4a801f','2022-10-11 20:10:53','2022-10-11 20:10:53');
+	(1,'admin','21232f297a57a5a743894a0e4a801fc3','2022-10-11 20:10:53','2022-10-11 20:10:53');
 
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
