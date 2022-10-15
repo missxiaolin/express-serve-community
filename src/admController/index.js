@@ -48,8 +48,8 @@ export default class AdmArticleContent extends Base {
       pageSize = data.pageSize ? data.pageSize : 30;
     data.offset = page == 1 ? 0 : (page - 1) * pageSize;
     data.limit = pageSize;
-    let activeData = await articleModel.delList(data);
-    let count = await articleModel.admList(data);
+    let activeData = await articleModel.admList(data);
+    let count = await articleModel.admCount(data);
     result.activeData = activeData;
     result.count = count;
     return this.send(res, result);
