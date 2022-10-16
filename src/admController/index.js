@@ -32,7 +32,12 @@ export default class AdmArticleContent extends Base {
     }
     data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
     data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
-    await articleModel.addAdmArticle(data);
+    if (!!data.id) {
+      await articleModel.updateAdmArticle(data);
+    } else {
+      await articleModel.addAdmArticle(data);
+    }
+    
     return this.send(res, "保存成功");
   }
 

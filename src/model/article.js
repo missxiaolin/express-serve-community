@@ -23,7 +23,7 @@ function getTableName() {
 }
 
 export default class Article {
-  constructor() {}
+  constructor() { }
 
   /**
    * adm 保存
@@ -58,6 +58,25 @@ export default class Article {
     let id = _.get(insertResult, [0], 0);
 
     return id > 0;
+  }
+
+  /**
+   * 修改
+   * @param {*} data 
+   */
+  async updateAdmArticle(data) {
+    let tableName = getTableName();
+    let model = await Knex.from(tableName).where('id', data.id)
+      .update({
+        title: data.title,
+        type: data.type,
+        auth: data.auth,
+        content: data.content,
+        is_topping: data.is_topping,
+        is_boutique: data.is_boutique,
+        is_del: data.is_del,
+      })
+    return model
   }
 
   /**
