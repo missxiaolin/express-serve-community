@@ -25,7 +25,8 @@ export default class AdmArticleContent extends Base {
       types.indexOf(Number(data.type)) == -1 ||
       !data.auth ||
       !data.is_topping ||
-      !data.is_boutique
+      !data.is_boutique ||
+      !data.is_del
     ) {
       return this.send(res, {}, 500, "参数错误");
     }
@@ -33,6 +34,25 @@ export default class AdmArticleContent extends Base {
     data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
     await articleModel.addAdmArticle(data);
     return this.send(res, "保存成功");
+  }
+
+  /**
+   * 查询文章详情
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async detail (req, res) {
+    let data = req.body || {}
+    if (
+      !data.id
+    ) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    let result = await articleModel.detailAdmArticle({
+      id: data.id
+    })
+    return this.send(res, result[0] || {});
   }
 
   /**

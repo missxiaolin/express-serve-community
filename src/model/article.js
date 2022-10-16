@@ -40,7 +40,7 @@ export default class Article {
     insertData.flow = 0;
     insertData.is_topping = data.is_topping;
     insertData.is_boutique = data.is_boutique;
-    insertData.is_del = NOT_DELETE;
+    insertData.is_del = data.is_del;
     insertData.user_id = data.user_id || 0;
     insertData.comment_num = 0;
     insertData.fabulous_num = 0;
@@ -58,6 +58,19 @@ export default class Article {
     let id = _.get(insertResult, [0], 0);
 
     return id > 0;
+  }
+
+  /**
+   * adm 查询详情
+   * @param {*} data 
+   * @returns 
+   */
+  async detailAdmArticle(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName);
+    model = await model.where('id', data.id)
+
+    return model
   }
 
   /**

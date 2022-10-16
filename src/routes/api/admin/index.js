@@ -9,6 +9,11 @@ const index = RouterConfigBuilder.routerConfigBuilder('/adm/article/save', Route
     return admArticleContent.save(req, res)
 }, true)
 
+// 查询
+const detail = RouterConfigBuilder.routerConfigBuilder('/adm/article/detail', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return admArticleContent.detail(req, res)
+}, true)
+
 // 所有文章列表
 const admArticleList = RouterConfigBuilder.routerConfigBuilder('/adm/article/list', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
     return admArticleContent.list(req, res)
@@ -31,6 +36,7 @@ const delArticle = RouterConfigBuilder.routerConfigBuilder('/adm/article/del', R
 
 export default {
     ...index,
+    ...detail,
     ...admArticleList,
     ...toppingArticle,
     ...boutiqueArticle,
