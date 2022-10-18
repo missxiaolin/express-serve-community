@@ -1,6 +1,6 @@
 [
     {
-      "name": "montor-server",
-      "script": "npm run start"
+      "name": "community-server",
+      "script": "npm run serve"
     }
 ]
