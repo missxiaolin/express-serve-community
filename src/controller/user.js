@@ -92,9 +92,9 @@ export default class UserContent extends Base {
     data.limit = data.pageSize ? data.pageSize : 30;
     data.article_user_id = data.user_info.user_id
     data.is_create_sort = true
-    let commentList = await commentModel.getUserCommentNotDelList()
+    let commentList = await commentModel.getUserCommentNotDelList(data)
     let count = await commentModel.getUserCommentNotDelCount({
-      type: data.type,
+      article_type: data.article_type,
       article_user_id: data.user_info.user_id,
     });
     result.commentList = commentList

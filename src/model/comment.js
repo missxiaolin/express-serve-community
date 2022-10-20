@@ -89,8 +89,8 @@ export default class Comment {
     let tableName = getTableName();
     let model = Knex.from(tableName).where("is_del", NOT_DELETE);
 
-    if (data.type) {
-      model.andWhere("type", data.type);
+    if (data.article_type) {
+      model.andWhere("article_type", data.article_type);
     }
 
     if (data.article_user_id) {
@@ -122,7 +122,7 @@ export default class Comment {
       model.andWhere("article_user_id", data.article_user_id);
     }
     if (data.type) {
-      model.andWhere("type", data.type);
+      model.andWhere("article_type", data.article_type);
     }
 
     model = await model.count("* as activeCount");
