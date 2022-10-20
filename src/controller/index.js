@@ -110,6 +110,19 @@ export default class ArticleContent extends Base {
       title: data.title,
       type: data.type || ''
     });
+    for(let i = 0; i < activeData.length; i++) {
+      activeData[i].created_at = moment( activeData[i].created_at).format(DATE_FORMAT.DISPLAY_BY_SECOND);
+      // 未点赞
+      activeData[i].is_fabulous = 1
+      let fabulousData = await fabulousModel.detail({
+        article_id: activeData[i].id,
+        user_id: data.user_info.user_id
+      });
+      if (!fabulousData || fabulousData.length != 0) {
+        // 点赞
+        activeData[i].is_fabulous = 2;
+      }
+    }
     result.activeData = activeData;
     result.count = count;
     return this.send(res, result);
