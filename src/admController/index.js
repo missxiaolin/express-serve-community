@@ -1,10 +1,13 @@
 import Base from "./base";
 import Article from "../model/article";
+import Comment from "../model/comment";
 import { NOT_DELETE, NOTICE_TYPE } from "../model/article";
 import moment from "moment";
 import DATE_FORMAT from "../constants/date_format";
 
 const articleModel = new Article();
+const commentModel = new Comment();
+
 
 /**
  * 文章
@@ -75,6 +78,13 @@ export default class AdmArticleContent extends Base {
     data.limit = pageSize;
     let activeData = await articleModel.admList(data);
     let count = await articleModel.admCount(data);
+    for(let i = 0; i < activeData.length; i++) {
+      activeData[i].created_at = moment( activeData[i].created_at).format(DATE_FORMAT.DISPLAY_BY_SECOND);
+      if (activeData[i].type == 1) {
+        activeData[i].comments = await commentModel.admGetCommentId(activeData[i].id)
+      }
+    }
+    
     result.activeData = activeData;
     result.count = count;
     return this.send(res, result);
@@ -134,5 +144,40 @@ export default class AdmArticleContent extends Base {
     }
     await articleModel.updateDel(data);
     return this.send(res, "设置成功");
+  }
+
+  /**
+   * 添加评论
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async addComment(req, res) {
+    let data = req.body || {}
+    if (!data.id || !data.content) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    let articleDetail = await articleModel.detailAdmArticle({
+      id: data.id
+    })
+    let article = articleDetail[0] || {};
+    if (!articleDetail || articleDetail.length <= 0 || article.type != 1) {
+      return this.send(res, {}, 500, "文章不存在");
+    }
+    let commentData = {
+      comment_id: 0,
+      article_id: article.id,
+      article_type: article.type,
+      article_user_id: article.user_id,
+      avatar: '',
+      auth: '',
+      user_id: 0,
+      text: data.content,
+      is_del: 1,
+      created_at: moment().format(DATE_FORMAT.DISPLAY_BY_SECOND),
+      updated_at: moment().format(DATE_FORMAT.DISPLAY_BY_SECOND)
+    }
+    await commentModel.admAddComment(commentData)
+    return this.send(res, "保存成功");
   }
 }

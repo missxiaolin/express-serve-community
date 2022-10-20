@@ -22,6 +22,11 @@ const development = {
     user: 'yoga_test',
     password: 'gaY0fff@1017',
     database: 'yoga'
+    // host: '127.0.0.1',
+    // port: '3306',
+    // user: 'root',
+    // password: 'root',
+    // database: 'yoga'
 }
 // 测试环境配置
 const testing = development
