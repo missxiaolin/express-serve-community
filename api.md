@@ -261,34 +261,6 @@
 }
 ~~~
 
-### 用户成就
-
-/api/user/article/list
-
-入参
-
-~~~
-{
-    
-}
-~~~
-
-出参
-
-~~~
-{
-    code: 200,
-    data: {
-        questionCount: 1, // 问题总数
-        activeCount: 1, // 文章总数
-        totalComment: 1, // 评论总数
-        totalFabulous: 1, // 点赞总数
-        totalFlow: 1 // 浏览量总数
-    },
-    '',
-    ''
-}
-~~~
 
 ### 用户文章列表
 
@@ -301,6 +273,7 @@
     page: 1,
     pageSize: 30,
     is_create_sort: false, // 是否按照创建时间排序
+    type: 1, // 1 提问 2 文章 3 公告
 }
 ~~~
 
