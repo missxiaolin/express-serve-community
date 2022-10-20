@@ -34,11 +34,16 @@ const delArticle = RouterConfigBuilder.routerConfigBuilder('/adm/article/del', R
     return admArticleContent.del(req, res)
 }, true)
 
+const commentArticle = RouterConfigBuilder.routerConfigBuilder('/adm/article/comment/add', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return admArticleContent.addComment(req, res)
+}, true)
+
 export default {
     ...index,
     ...detail,
     ...admArticleList,
     ...toppingArticle,
     ...boutiqueArticle,
-    ...delArticle
+    ...delArticle,
+    ...commentArticle
 }

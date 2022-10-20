@@ -108,6 +108,7 @@ export default class ArticleContent extends Base {
     let count = await articleModel.allNotDelCount({
       is_del: NOT_DELETE,
       title: data.title,
+      type: data.type || ''
     });
     result.activeData = activeData;
     result.count = count;

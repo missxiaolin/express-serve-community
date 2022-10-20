@@ -14,8 +14,14 @@ const userArticleList = RouterConfigBuilder.routerConfigBuilder('/api/user/artic
     return userController.getUserList(req, res)
 }, true)
 
+// 用户评论列表
+const userCommentList = RouterConfigBuilder.routerConfigBuilder('/api/user/comment/list', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return userController.getUserCommentList(req, res)
+}, true)
+
 export default {
     ...userArticleAchievement,
-    ...userArticleList
+    ...userArticleList,
+    ...userCommentList
     
 }
