@@ -11,7 +11,7 @@ function getTableName() {
 }
 
 export default class Comment {
-  constructor() {}
+  constructor() { }
 
   /**
    * 保存评论
@@ -78,5 +78,54 @@ export default class Comment {
       .update('is_del', DELETE);
 
     return model;
+  }
+
+  /**
+   * 用户文章评论列表
+   * @param {*} data 
+   * @returns 
+   */
+  async getUserCommentNotDelList(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName).where("is_del", NOT_DELETE);
+
+    if (data.type) {
+      model.andWhere("type", data.type);
+    }
+
+    if (data.article_user_id) {
+      model.andWhere("article_user_id", data.article_user_id);
+    }
+
+    if (data.is_create_sort) {
+      model = model.orderBy("created_at", "desc");
+    }
+
+    if (data.offset) {
+      model = model.offset(data.offset);
+    }
+    model = await model.limit(data.limit);
+
+    return model;
+  }
+
+  /**
+   * 评论总数
+   * @param {*} data 
+   * @returns 
+   */
+  async getUserCommentNotDelCount(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName).where("is_del", NOT_DELETE);
+
+    if (data.article_user_id) {
+      model.andWhere("article_user_id", data.article_user_id);
+    }
+    if (data.type) {
+      model.andWhere("type", data.type);
+    }
+
+    model = await model.count("* as activeCount");
+    return model[0].activeCount;
   }
 }

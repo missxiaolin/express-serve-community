@@ -1,8 +1,11 @@
 import Base from "./base";
 import Article from "../model/article";
+import Comment from "../model/comment";
 import { NOT_DELETE, ARTICLE_TYPE, QUESTION_TYPE } from "../model/article";
 
 const articleModel = new Article();
+const commentModel = new Comment();
+
 
 /**
  * 用户
@@ -28,7 +31,7 @@ export default class UserContent extends Base {
       type: ARTICLE_TYPE,
       user_id: data.user_info.user_id,
     });
-    
+
     // 统计
     let total = await articleModel.allDelUserIdSum({
       is_del: NOT_DELETE,
@@ -72,6 +75,30 @@ export default class UserContent extends Base {
     });
     result.activeData = activeData;
     result.count = count;
+    return this.send(res, result);
+  }
+
+  /**
+   * 用户文章评论列表
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async getUserCommentList(req, res) {
+    let data = req.body || {},
+      result = {},
+      page = data.page || 1;
+    data.offset = page == 1 ? 0 : (page - 1) * 10;
+    data.limit = data.pageSize ? data.pageSize : 30;
+    data.article_user_id = data.user_info.user_id
+    data.is_create_sort = true
+    let commentList = await commentModel.getUserCommentNotDelList()
+    let count = await commentModel.getUserCommentNotDelCount({
+      type: data.type,
+      article_user_id: data.user_info.user_id,
+    });
+    result.commentList = commentList
+    result.count = count
     return this.send(res, result);
   }
 }
