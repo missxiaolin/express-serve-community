@@ -262,7 +262,7 @@
 ~~~
 
 
-### 用户文章列表
+### 用户文章/提问列表
 
 /api/user/article/list
 
@@ -296,6 +296,44 @@
                 "fabulous_num": 2,
                 "is_topping": 1,
                 "is_boutique": 2,
+                "is_del": 1,
+                "created_at": "2022-10-10T07:16:27.000Z",
+                "updated_at": "2022-10-16T05:15:14.000Z"
+            }
+        ],
+        "count": 6
+    },
+    "msg": "",
+    "errorCode": ""
+}
+~~~
+
+### 用户评论/回复
+
+/api/user/comment/list
+
+入参
+
+~~~
+{
+    page: 1,
+    pageSize: 30,
+    article_type: 1, // 1 回复列表 2 评论列表 
+}
+~~~
+
+出参
+
+~~~
+{
+    "code": 200,
+    "data": {
+        "commentList": [
+            {
+                "id": 1,
+                "text": 1,
+                "auth": '昵称',
+                "avatar": '头像',
                 "is_del": 1,
                 "created_at": "2022-10-10T07:16:27.000Z",
                 "updated_at": "2022-10-16T05:15:14.000Z"
