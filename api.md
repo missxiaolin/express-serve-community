@@ -80,6 +80,7 @@
 
 ~~~
 {
+    type: 1, // 1 提问 2 文章 3 公告
     page: 1,
     pageSize: 30,
     title: "",
