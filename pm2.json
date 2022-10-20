@@ -1,6 +1,6 @@
 [
-    {
-      "name": "community-server",
-      "script": "npm run serve"
-    }
+  {
+    "name": "community-server",
+    "script": "npm run serve"
+  }
 ]

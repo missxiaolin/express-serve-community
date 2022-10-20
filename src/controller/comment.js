@@ -28,9 +28,12 @@ export default class CommentContent extends Base {
     if (!articleDetail || articleDetail.length <= 0) {
       return this.send(res, {}, 500, "文章不存在");
     }
+    let articleData = articleDetail[0]
 
     data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
     data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    data.article_type = articleData.type
+    data.article_user_id = articleData.user_id
     commentModel.addComment(data);
     return this.send(res, "保存成功");
   }

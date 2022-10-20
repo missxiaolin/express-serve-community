@@ -20,7 +20,7 @@ const articleList = RouterConfigBuilder.routerConfigBuilder('/api/article/list',
 }, true)
 
 // 公告列表
-const articleNoticeList = RouterConfigBuilder.routerConfigBuilder('/api/notice/list', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
+const articleNoticeList = RouterConfigBuilder.routerConfigBuilder('/api/notice/list', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
     return indexController.noticeList(req, res)
 }, true)
 

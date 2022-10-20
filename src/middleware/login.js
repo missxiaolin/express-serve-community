@@ -33,13 +33,13 @@ function login(req, res, next) {
  * @param {*} next
  */
 function cLogin(req, res, next) {
-  let token = req.get("Authorization") || "";
+  let token = req.get("Authorization") || req.get("authorization") || "";
   if (!token) {
     res.send(API_RES.needLoginIn());
     return;
   }
   const instance = axios.create({
-    baseURL: "http://test.webapi.sayhaiapp.com",
+    baseURL: "https://test-webapi.sayhaiapp.com",
     timeout: 1000,
     headers: {
       Authorization: token,
@@ -48,8 +48,7 @@ function cLogin(req, res, next) {
   instance
     .get("/sayhai/user")
     .then((resData) => {
-      console.log(resData.data);
-      if (res.code != 200) {
+      if (resData.data.code != 200) {
         res.send(API_RES.needLoginIn());
         return;
       }
