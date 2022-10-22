@@ -72,6 +72,10 @@ export default class CommentContent extends Base {
     }
     let commentList = await commentModel.getArticleList(data);
     let count = await commentModel.allNotDelCount(data)
+    for(let i = 0; i < commentList.length; i++) {
+      commentList[i].created_at = moment( commentList[i].created_at).format(DATE_FORMAT.DISPLAY_BY_SECOND);
+      commentList[i].updated_at = moment( commentList[i].updated_at).format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    }
     result.commentList = commentList;
     result.count = count;
     return this.send(res, result);
