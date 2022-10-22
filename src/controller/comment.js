@@ -72,7 +72,6 @@ export default class CommentContent extends Base {
     }
     let commentList = await commentModel.getArticleList(data);
     let count = await commentModel.allNotDelCount(data)
-    detail.commentList = commentList;
     result.commentList = commentList;
     result.count = count;
     return this.send(res, result);
