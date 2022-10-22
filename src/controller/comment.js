@@ -32,8 +32,8 @@ export default class CommentContent extends Base {
 
     data.created_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
     data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
-    data.article_type = articleData.type
-    data.article_user_id = articleData.user_id
+    data.article_type = articleData.type || 0
+    data.article_user_id = articleData.user_id || 0
     commentModel.addComment(data);
     return this.send(res, "保存成功");
   }
