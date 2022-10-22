@@ -22,5 +22,6 @@ const getUserList = RouterConfigBuilder.routerConfigBuilder('/api/article/commen
 
 export default {
     ...commentSave,
-    ...commentDel
+    ...commentDel,
+    ...getUserList
 }
