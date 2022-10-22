@@ -71,8 +71,10 @@ export default class ArticleContent extends Base {
     //   article_id: data.id,
     // });
     // detail.commentList = commentList;
-
-    return this.send(res, result[0]);
+    let articleData = result[0]
+    articleData.created_at = moment(articleData.created_at).format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    articleData.updated_at = moment(articleData.updated_at).format(DATE_FORMAT.DISPLAY_BY_SECOND);
+    return this.send(res, articleData);
   }
 
   /**
