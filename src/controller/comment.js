@@ -52,4 +52,29 @@ export default class CommentContent extends Base {
     await commentModel.del(data);
     return this.send(res, "删除成功");
   }
+
+  /**
+   * 获取文章评论列表
+   * @param {*} req 
+   * @param {*} res 
+   */
+  async getArticleList(req, res) {
+    let data = req.body || {},
+      result = {},
+      page = data.page || 1,
+      pageSize = data.pageSize ? data.pageSize : 30;
+    data.offset = page == 1 ? 0 : (page - 1) * pageSize;
+    data.limit = pageSize;
+    data.is_create_sort = true
+    data.is_del = 1
+    if (!data.id) {
+      return this.send(res, {}, 500, "参数错误");
+    }
+    let commentList = await commentModel.getArticleList(data);
+    let count = await commentModel.allNotDelCount(data)
+    detail.commentList = commentList;
+    result.commentList = commentList;
+    result.count = count;
+    return this.send(res, result);
+  }
 }

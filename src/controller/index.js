@@ -66,11 +66,11 @@ export default class ArticleContent extends Base {
       detail.is_fabulous = 2;
     }
     // 文章评论列表
-    let commentList = await commentModel.getUserList({
-      is_create_sort: true,
-      article_id: data.id,
-    });
-    detail.commentList = commentList;
+    // let commentList = await commentModel.getUserList({
+    //   is_create_sort: true,
+    //   article_id: data.id,
+    // });
+    // detail.commentList = commentList;
 
     return this.send(res, result[0]);
   }

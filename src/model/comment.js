@@ -85,7 +85,7 @@ export default class Comment {
     let tableName = getTableName();
     let model = Knex.from(tableName)
       .andWhere("article_id", id);
-      model = await model;
+    model = await model;
 
     return model;
   }
@@ -108,6 +108,41 @@ export default class Comment {
     model = await model;
 
     return model;
+  }
+
+  /**
+   * 获取文章评论列标
+   * @param {*} data 
+   * @returns 
+   */
+  async getArticleList(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName).where("is_del", data.is_del)
+      .andWhere("article_id", data.id);
+
+    if (data.is_create_sort) {
+      model = model.orderBy("created_at", "desc");
+    }
+    if (data.offset) {
+      model = model.offset(data.offset);
+    }
+    model = await model.limit(data.limit);
+
+    return model;
+  }
+
+  /**
+   * 数据总数
+   * @param {*} data
+   * @returns
+   */
+  async allNotDelCount(data) {
+    let tableName = getTableName();
+    let model = Knex.from(tableName).where("is_del", data.is_del)
+      .andWhere("article_id", data.id);
+
+    model = await model.count("* as commentCount");
+    return model[0].commentCount;
   }
 
   /**

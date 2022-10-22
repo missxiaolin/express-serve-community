@@ -14,6 +14,11 @@ const commentDel = RouterConfigBuilder.routerConfigBuilder('/api/comment/del', R
     return commentContent.del(req, res)
 }, true)
 
+// 文章评论
+const getUserList = RouterConfigBuilder.routerConfigBuilder('/api/article/comment/list', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return commentContent.getArticleList(req, res)
+}, true)
+
 
 export default {
     ...commentSave,
