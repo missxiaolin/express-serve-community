@@ -26,8 +26,8 @@ export default class Comment {
     insertData.article_id = data.article_id;
     insertData.article_type = data.article_type
     insertData.article_user_id = data.article_user_id
-    insertData.auth = data.auth;
-    insertData.avatar = data.avatar;
+    insertData.auth = data.auth || '';
+    insertData.avatar = data.avatar || '';
     insertData.is_del = NOT_DELETE;
     insertData.user_id = data.user_id;
     insertData.created_at = data.created_at;
@@ -58,8 +58,8 @@ export default class Comment {
     insertData.article_id = data.article_id;
     insertData.article_type = data.article_type
     insertData.article_user_id = data.article_user_id
-    insertData.auth = data.user_info.auth;
-    insertData.avatar = data.user_info.avatar;
+    insertData.auth = data.user_info.auth || '';
+    insertData.avatar = data.user_info.avatar || '';
     insertData.is_del = NOT_DELETE;
     insertData.user_id = data.user_info.user_id;
     insertData.created_at = data.created_at;
