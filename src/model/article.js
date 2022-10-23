@@ -201,7 +201,7 @@ export default class Article {
     insertData.type = data.type;
     insertData.title = data.title;
     insertData.content = data.content;
-    insertData.auth = data.user_info.auth;
+    insertData.auth = data.user_info.auth || '';
     insertData.flow = 0;
     insertData.is_topping = TOPPING;
     insertData.is_boutique = NOT_BOUTIQUE;
