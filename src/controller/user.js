@@ -44,9 +44,9 @@ export default class UserContent extends Base {
     result = {
       questionCount,
       activeCount,
-      totalComment: total.comment_total,
-      totalFabulous: total.fabulous_total,
-      totalFlow: total.flow_total,
+      totalComment: total.comment_total || 0,
+      totalFabulous: total.fabulous_total || 0,
+      totalFlow: total.flow_total || 0,
     };
 
     return this.send(res, result);
