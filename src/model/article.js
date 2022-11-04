@@ -389,4 +389,26 @@ export default class Article {
       });
     return res;
   }
+  
+  /**
+   * 评论数加1
+   * @param {*} data 
+   * @param {*} isAdd
+   * @returns 
+   */
+   async addCommentNum(data, isAdd) {
+    let num = isAdd ? data.comment_num + 1 : data.comment_num - 1
+    let tableName = getTableName();
+    let res = await Knex.from(tableName)
+      .where("id", data.id)
+      .update(
+        "comment_num",
+        num <=0 ? 0 : num
+      )
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+    return res;
+  }
 }

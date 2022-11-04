@@ -34,7 +34,9 @@ export default class CommentContent extends Base {
     data.updated_at = moment().format(DATE_FORMAT.DISPLAY_BY_SECOND);
     data.article_type = articleData.type || 0
     data.article_user_id = articleData.user_id || 0
-    commentModel.addComment(data);
+    await commentModel.addComment(data);
+    await articleModel.addCommentNum(articleData, true)
+
     return this.send(res, "保存成功");
   }
 
@@ -49,7 +51,15 @@ export default class CommentContent extends Base {
     if (!data.id) {
       return this.send(res, {}, 500, "参数错误");
     }
+    let articleDetail = await articleModel.detail({
+      id: data.id,
+    });
+    if (!articleDetail || articleDetail.length <= 0) {
+      return this.send(res, {}, 500, "文章不存在");
+    }
+    let articleData = articleDetail[0]
     await commentModel.del(data);
+    await articleModel.addCommentNum(articleData, false)
     return this.send(res, "删除成功");
   }
 
